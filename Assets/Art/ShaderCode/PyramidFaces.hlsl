@@ -77,7 +77,15 @@ float4 Fragment(VertexOutput input) : SV_Target{
     // Call URP's simple lighting function
     // The arguments are lightingInput, albedo color, specular color, smoothness, emission color, and alpha
 
-    return UniversalFragmentBlinnPhong(lightingInput, albedo, 1, 0, 0, 1);
+    SurfaceData surfaceInput = (SurfaceData)0;
+    surfaceInput.albedo = albedo;
+    surfaceInput.alpha = 1;
+    surfaceInput.specular = 1;
+    surfaceInput.occlusion = 1;
+
+    return UniversalFragmentBlinnPhong(lightingInput, surfaceInput);
+
+    //return UniversalFragmentBlinnPhong(lightingInput, albedo, 1, 0, 0, 1);
 #endif
 }
 

@@ -15,6 +15,7 @@
     * [Salix alba, math to find circle intersections](https://math.stackexchange.com/questions/256100/how-can-i-find-the-points-at-which-two-circles-intersect)
 
 * Scene: 02-
+  * ~~[Geometry Shaders Made Easy In Unity URP! For Those New to Shaders!](https://youtu.be/7C-mA08mp8o)~~
   * [Intro to Compute Shaders in Unity URP! Replace Geometry Shaders](https://youtu.be/EB5HiqDl7VE)
 
 ## Resources From ... 
