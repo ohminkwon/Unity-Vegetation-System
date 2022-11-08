@@ -13,6 +13,7 @@ public class GrassSpawner : MonoBehaviour
 
         var s = settings;
 
+        // Math to initialize some information about the circles and the spawn area
         Vector2 circleACenter = new Vector2(-s.areaHalfLength - s.circleCenterOffset, -s.areaHalfLength);
         Vector2 centerDelta = new Vector2(0, s.areaHalfLength * 2);
         float centerDistance = centerDelta.magnitude;
@@ -28,12 +29,12 @@ public class GrassSpawner : MonoBehaviour
 
                 if(DoCirclesIntersect(centerDistance, radiusA, radiusB))
                 {
+                    // Find the intersection point
                     Vector2 pointA = CalcIntersectionPoint(circleACenter, centerDelta, centerDistance, radiusA, radiusB);
 
-                    if (IsPointInBounds(areaBounds, pointA))
-                    {
-                        spawnPoints.Add(pointA);
-                    }
+                    // If the point is insdie the bounds, add it to the spawn list
+                    if (IsPointInBounds(areaBounds, pointA))                    
+                        spawnPoints.Add(pointA);                    
                 }
             }
         }
@@ -56,11 +57,13 @@ public class GrassSpawner : MonoBehaviour
     }
     private Vector2 CalcIntersectionPoint(Vector2 circleACenter, Vector2 centerDelta, float centerDistance, float radiusA, float radiusB)
     {
+        // Math to calculate the intersection between tow circles
         float lengthMultiplier = (radiusA * radiusA - radiusB * radiusB + centerDistance * centerDistance) / (2 * centerDistance);
         float heightMultiplier = Mathf.Sqrt(radiusA * radiusA - lengthMultiplier * lengthMultiplier);
         float lDivD = lengthMultiplier / centerDistance;
         float hDivD = heightMultiplier / centerDistance;
 
+        // The intersection point
         Vector2 pointA = new Vector2(lDivD * centerDelta.x + hDivD*centerDelta.y + circleACenter.x,
                                     lDivD*centerDelta.y - hDivD*centerDelta.x + circleACenter.y);
 
@@ -70,16 +73,26 @@ public class GrassSpawner : MonoBehaviour
     {
         return areaBounds.Contains(point);
     }
-
 }
 
 [System.Serializable]
 public class Settings
 {
+    [Tooltip("Half the length of the box to spawn grass, centered on the game object")]
     public int areaHalfLength;
+
+    [Tooltip("The number of rings to calculate. Put more than you think")]
     public int numRings;
+
+    [Tooltip("The amount to increase the ring radius each iteration")]
     public float ringRadiusIncrement;
+
+    [Tooltip("If ringIndex % staggerRingModulo == 0, apply a radius offset")]
     public int staggerRingModulo;
+
+    [Tooltip("The radius offset to apply every few rings")]
     public float staggerRingOffset;
+
+    [Tooltip("The amount to offset to the circle centers to the left of the spawn box")]
     public float circleCenterOffset;
 }
