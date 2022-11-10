@@ -1,11 +1,19 @@
 # Unity Vegetation System
-[![Cover](./Assets/Art/Samples/cover-vegetation.png)](https://youtu.be/jnDkbWfy9xI)
 
-## Mesh
+## 01-GrassWithWind
+[![Cover](./Assets/Art/Samples/01-cover-vegetation.png)](https://youtu.be/jnDkbWfy9xI)
+
+### Mesh
 ![mesh-card](./Assets/Art/Samples/mesh-card.png)
 
-## Shader Graph
+### Shader Graph
 ![shader-graph](./Assets/Art/Samples/shaderGraph.png)
+
+## 02-ComputeShader
+[![Cover](./Assets/Art/Samples/02-cover-ComputeShader.png)](https://youtu.be/UIM5r9QLgNg)
+
+## 03-GrassWithGeometryShaders
+[![Cover](./Assets/Art/Samples/03-cover-GrassWithGeometryShaders.png)](https://youtu.be/1pL7GS5mEPA)
 
 ## Reference
 * Scene: 01-GrassWithWind
@@ -14,10 +22,16 @@
     * [Casey Muratori, "The Nebraska Problem"](https://caseymuratori.com/blog_0011)
     * [Salix alba, math to find circle intersections](https://math.stackexchange.com/questions/256100/how-can-i-find-the-points-at-which-two-circles-intersect)
 
-* Scene: 02-
+* Scene: 02-ComputeShader
   * ~~[Geometry Shaders Made Easy In Unity URP! For Those New to Shaders!](https://youtu.be/7C-mA08mp8o)~~
   * [Intro to Compute Shaders in Unity URP! Replace Geometry Shaders](https://youtu.be/EB5HiqDl7VE)
+
+* Scene: 03-GrassWithGeometryShaders
+  * [Rendering Grass In Unity URP Using Noise and Geometry Shaders!](https://youtu.be/YghAbgCN8XA)
+    * [Shahriar Shahrabi: grass examples](https://shahriyarshahrabi.medium.com/volumetric-grass-shader-28ebb9f6860b)
+    * [CJT-Jackton: geometry shader examples](https://github.com/CJT-Jackton/URP-Geometry-Shader-Example)
 
 ## Resources From ... 
   * [Lennart Demes, ground texture](https://ambientcg.com/view?id=Ground003)
   * [grass textures, Standard Assets](https://assetstore.unity.com/packages/essentials/asset-packs/standard-assets-for-unity-2018-4-32351)
+  * [Grainy Noise Texture from Alan Zucconi](https://www.alanzucconi.com/2019/10/08/journey-sand-shader-3/) AI Upscaling from [Upscale.media](https://www.upscale.media/) & Filter-Noise in Photoshop
