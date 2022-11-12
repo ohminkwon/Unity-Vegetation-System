@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3740861400609570573}
   - component: {fileID: 1445306756209920967}
   m_Layer: 0
-  m_Name: GrassQuad
+  m_Name: 01-GrassQuad
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -3,33 +3,28 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
 
-public class ProceduralPyramidRenderer : MonoBehaviour
+[ExecuteInEditMode] // This allows the grass renderer to be visible in edit mode
+public class ProceduralGrassRenderer : MonoBehaviour
 {
-
-    [Tooltip("A mesh to extrude the pyramids from")]
+    [Tooltip("A mesh to extrude the grass from")]
     [SerializeField] private Mesh sourceMesh = default;
 
-    [Tooltip("The pyramid geometry creating compute shader")]
-    [SerializeField] private ComputeShader pyramidComputeShader = default;
+    [Tooltip("The grass geometry creating compute shader")]
+    [SerializeField] private ComputeShader grassComputeShader = default;
 
     [Tooltip("The triangle count adjustment compute shader")]
     [SerializeField] private ComputeShader triToVertComputeShader = default;
 
-    [Tooltip("The material to render the pyramid mesh")]
+    [Tooltip("The material to render the grass mesh")]
     [SerializeField] private Material material = default;
 
-    [Tooltip("The pyramid height, along a triangle normal")]
-    [SerializeField] private float pyramidHeight = 1;
+    [SerializeField] private GrassSettings grassSettings = default;
 
-    [Tooltip("How many times the animation plays, per second")]
-    [SerializeField] private float animationFrequency = 1;
-
-    // The structure to send to the compute shader
-    // This layout kind assures that the data is laid out sequentially
     [System.Runtime.InteropServices.StructLayout(System.Runtime.InteropServices.LayoutKind.Sequential)]
     private struct SourceVertex
     {
         public Vector3 position;
+        public Vector3 normal;
         public Vector2 uv;
     }
 
@@ -43,8 +38,13 @@ public class ProceduralPyramidRenderer : MonoBehaviour
     private ComputeBuffer drawBuffer;
     // A compute buffer to hold indirect draw arguments
     private ComputeBuffer argsBuffer;
+
+    private ComputeShader instantiatedGrassComputeShader;
+    private ComputeShader instantiatedTriToVertComputeShader;
+    private Material instantiatedMaterial;
+
     // The id of the kernel in the pyramid compute shader
-    private int idPyramidKernel;
+    private int idGrassKernel;
     // The id of the kernel in the tri to vert count compute shader
     private int idTriToVertKernel;
     // The x dispatch size for the pyramid compute shader
@@ -53,9 +53,9 @@ public class ProceduralPyramidRenderer : MonoBehaviour
     private Bounds localBounds;
 
     // The size of one entry into the various compute buffers
-    private const int SOURCE_VERT_STRIDE = sizeof(float) * (3 + 2);
+    private const int SOURCE_VERT_STRIDE = sizeof(float) * (3 + 3 + 2); // position + normal + UV
     private const int SOURCE_TRI_STRIDE = sizeof(int);
-    private const int DRAW_STRIDE = sizeof(float) * (3 + (3 + 2) * 3);
+    private const int DRAW_STRIDE = sizeof(float) * (2 + (3 + 3 + 2) * 3); // height + 3 * (position + normal + UV)
     private const int ARGS_STRIDE = sizeof(int) * 4;
 
     private void OnEnable()
@@ -67,8 +67,14 @@ public class ProceduralPyramidRenderer : MonoBehaviour
         }
         initialized = true;
 
+        // Instantiate the shaders so they can point to their own buffers
+        instantiatedGrassComputeShader = Instantiate(grassComputeShader);
+        instantiatedTriToVertComputeShader = Instantiate(triToVertComputeShader);
+        instantiatedMaterial = Instantiate(material);
+
         // Grab data from the source mesh
         Vector3[] positions = sourceMesh.vertices;
+        Vector3[] normals = sourceMesh.normals;
         Vector2[] uvs = sourceMesh.uv;
         int[] tris = sourceMesh.triangles;
 
@@ -79,6 +85,7 @@ public class ProceduralPyramidRenderer : MonoBehaviour
             vertices[i] = new SourceVertex()
             {
                 position = positions[i],
+                normal = normals[i],
                 uv = uvs[i],
             };
         }
@@ -88,11 +95,13 @@ public class ProceduralPyramidRenderer : MonoBehaviour
         // The stride is the size, in bytes, each object in the buffer takes up
         sourceVertBuffer = new ComputeBuffer(vertices.Length, SOURCE_VERT_STRIDE, ComputeBufferType.Structured, ComputeBufferMode.Immutable);
         sourceVertBuffer.SetData(vertices);
+
         sourceTriBuffer = new ComputeBuffer(tris.Length, SOURCE_TRI_STRIDE, ComputeBufferType.Structured, ComputeBufferMode.Immutable);
         sourceTriBuffer.SetData(tris);
-        // We split each triangle into three new ones
-        drawBuffer = new ComputeBuffer(numTriangles * 3, DRAW_STRIDE, ComputeBufferType.Append);
+      
+        drawBuffer = new ComputeBuffer(numTriangles * grassSettings.maxLayers, DRAW_STRIDE, ComputeBufferType.Append);
         drawBuffer.SetCounterValue(0); // Set the count to zero
+
         argsBuffer = new ComputeBuffer(1, ARGS_STRIDE, ComputeBufferType.IndirectArguments);
         // The data in the args buffer corresponds to:
         // 0: vertex count per draw instance. We will only use one instance
@@ -102,34 +111,59 @@ public class ProceduralPyramidRenderer : MonoBehaviour
         argsBuffer.SetData(new int[] { 0, 1, 0, 0 });
 
         // Cache the kernel IDs we will be dispatching
-        idPyramidKernel = pyramidComputeShader.FindKernel("Main");
+        idGrassKernel = grassComputeShader.FindKernel("Main");
         idTriToVertKernel = triToVertComputeShader.FindKernel("Main");
 
         // Set data on the shaders
-        pyramidComputeShader.SetBuffer(idPyramidKernel, "_SourceVertices", sourceVertBuffer);
-        pyramidComputeShader.SetBuffer(idPyramidKernel, "_SourceTriangles", sourceTriBuffer);
-        pyramidComputeShader.SetBuffer(idPyramidKernel, "_DrawTriangles", drawBuffer);
-        pyramidComputeShader.SetInt("_NumSourceTriangles", numTriangles);
+        instantiatedGrassComputeShader.SetBuffer(idGrassKernel, "_SourceVertices", sourceVertBuffer);
+        instantiatedGrassComputeShader.SetBuffer(idGrassKernel, "_SourceTriangles", sourceTriBuffer);
+        instantiatedGrassComputeShader.SetBuffer(idGrassKernel, "_DrawTriangles", drawBuffer);
+        instantiatedGrassComputeShader.SetInt("_NumSourceTriangles", numTriangles);
+        instantiatedGrassComputeShader.SetInt("_MaxLayers", grassSettings.maxLayers);
+        instantiatedGrassComputeShader.SetFloat("_TotalHeight", grassSettings.grassHeight);
+        instantiatedGrassComputeShader.SetFloat("_CameraDistanceMin", grassSettings.lodMinCameraDistance);
+        instantiatedGrassComputeShader.SetFloat("_CameraDistanceMax", grassSettings.lodMaxCameraDistance);
+        instantiatedGrassComputeShader.SetFloat("_CameraDistanceFactor", Mathf.Max(0, grassSettings.lodFactor));
+        instantiatedGrassComputeShader.SetFloat("_WorldPositionToUVScale", grassSettings.worldPositionUVScale);
+        if (grassSettings.useWorldPositionAsUV)
+        {
+            instantiatedGrassComputeShader.EnableKeyword("USE_WORLD_POSITION_AS_UV");
+        }
 
-        triToVertComputeShader.SetBuffer(idTriToVertKernel, "_IndirectArgsBuffer", argsBuffer);
+        instantiatedTriToVertComputeShader.SetBuffer(idTriToVertKernel, "_IndirectArgsBuffer", argsBuffer);
 
-        material.SetBuffer("_DrawTriangles", drawBuffer);
+        instantiatedMaterial.SetBuffer("_DrawTriangles", drawBuffer);
 
         // Calculate the number of threads to use. Get the thread size from the kernel
         // Then, divide the number of triangles by that size
-        pyramidComputeShader.GetKernelThreadGroupSizes(idPyramidKernel, out uint threadGroupSize, out _, out _);
+        grassComputeShader.GetKernelThreadGroupSizes(idGrassKernel, out uint threadGroupSize, out _, out _);
         dispatchSize = Mathf.CeilToInt((float)numTriangles / threadGroupSize);
 
         // Get the bounds of the source mesh and then expand by the pyramid height
         localBounds = sourceMesh.bounds;
-        localBounds.Expand(pyramidHeight);
+        localBounds.Expand(grassSettings.grassHeight);
     }
 
     private void OnDisable()
     {
-        // Dispose of buffers
+        // Dispose of buffers and copied shaders here
         if (initialized)
         {
+            // If the application is not in play mode, we have to call DestroyImmediate
+            if (Application.isPlaying)
+            {
+                Destroy(instantiatedGrassComputeShader);
+                Destroy(instantiatedTriToVertComputeShader);
+                Destroy(instantiatedMaterial);
+            }
+            else
+            {
+                DestroyImmediate(instantiatedGrassComputeShader);
+                DestroyImmediate(instantiatedTriToVertComputeShader);
+                DestroyImmediate(instantiatedMaterial);
+            }
+
+            // Release each buffer
             sourceVertBuffer.Release();
             sourceTriBuffer.Release();
             drawBuffer.Release();
@@ -138,8 +172,6 @@ public class ProceduralPyramidRenderer : MonoBehaviour
         initialized = false;
     }
 
-    // This applies the game object's transform to the local bounds
-    // Code by benblo from https://answers.unity.com/questions/361275/cant-convert-bounds-from-world-coordinates-to-loca.html
     public Bounds TransformBounds(Bounds boundsOS)
     {
         var center = transform.TransformPoint(boundsOS.center);
@@ -158,9 +190,13 @@ public class ProceduralPyramidRenderer : MonoBehaviour
         return new Bounds { center = center, extents = extents };
     }
 
-    // LateUpdate is called after all Update calls
     private void LateUpdate()
     {
+        if(Application.isPlaying == false)
+        {
+            OnDisable();
+            OnEnable();
+        }
 
         // Clear the draw buffer of last frame's data
         drawBuffer.SetCounterValue(0);
@@ -169,11 +205,11 @@ public class ProceduralPyramidRenderer : MonoBehaviour
         Bounds bounds = TransformBounds(localBounds);
 
         // Update the shader with frame specific data
-        pyramidComputeShader.SetMatrix("_LocalToWorld", transform.localToWorldMatrix);
-        pyramidComputeShader.SetFloat("_PyramidHeight", pyramidHeight * Mathf.Sin(animationFrequency * Time.timeSinceLevelLoad));
+        instantiatedGrassComputeShader.SetMatrix("_LocalToWorld", transform.localToWorldMatrix);
+        instantiatedGrassComputeShader.SetVector("_CameraPosition", Camera.main.transform.position);
 
         // Dispatch the pyramid shader. It will run on the GPU
-        pyramidComputeShader.Dispatch(idPyramidKernel, dispatchSize, 1, 1);
+        instantiatedGrassComputeShader.Dispatch(idGrassKernel, dispatchSize, 1, 1);
 
         // Copy the count (stack size) of the draw buffer to the args buffer, at byte position zero
         // This sets the vertex count for our draw procediral indirect call
@@ -182,11 +218,41 @@ public class ProceduralPyramidRenderer : MonoBehaviour
         // This the compute shader outputs triangles, but the graphics shader needs the number of vertices,
         // we need to multiply the vertex count by three. We'll do this on the GPU with a compute shader 
         // so we don't have to transfer data back to the CPU
-        triToVertComputeShader.Dispatch(idTriToVertKernel, 1, 1, 1);
+        instantiatedTriToVertComputeShader.Dispatch(idTriToVertKernel, 1, 1, 1);
 
         // DrawProceduralIndirect queues a draw call up for our generated mesh
         // It will receive a shadow casting pass, like normal
-        Graphics.DrawProceduralIndirect(material, bounds, MeshTopology.Triangles, argsBuffer, 0,
-            null, null, ShadowCastingMode.On, true, gameObject.layer);
+        Graphics.DrawProceduralIndirect(instantiatedMaterial, bounds, MeshTopology.Triangles, argsBuffer, 0,
+            null, null, ShadowCastingMode.Off, true, gameObject.layer);
     }
+
 }
+
+[System.Serializable]
+public class GrassSettings 
+{
+    [Tooltip("The total height of the grass layer stack")]
+    public float grassHeight = 0.5f;
+    
+    [Tooltip("The maximum number of layers")]
+    public int maxLayers = 16;
+
+    [Tooltip("Level-of-detail settings. As the camera moves away, the shader will decrease the number of layers.\n" +
+         "This is the distance from the camera LOD will start to take effect")]
+    public float lodMinCameraDistance = 1f;
+
+    [Tooltip("Level-of-detail settings. As the camera moves away, the shader will decrease the number of layers.\n" + 
+        "This is the distance from the camera the grass will have the fewest possible layers")]
+    public float lodMaxCameraDistance = 1f;
+
+    [Tooltip("Level-of-detail settings. As the camera moves away, the shader will decrease the number of layers.\n" + 
+        "This is a power applied to the distance lerp to control layer falloff")]
+    public float lodFactor = 2f;
+
+    [Tooltip("Use world position XZ as the UV. Useful for tiling")]
+    public bool useWorldPositionAsUV;
+
+    [Tooltip("Multiplier on world position when using it as a UV")]
+    public float worldPositionUVScale;
+}
+
