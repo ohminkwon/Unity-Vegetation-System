@@ -18,6 +18,9 @@
 ## 04-GrassWithComputeShaders
 [![Cover](./Assets/Art/Samples/04-cover-GrassWithComputeShaders.png)](https://youtu.be/ODRMUu2rpNc)
 
+## 05-GrasswithGeneratingBlades
+![Cover]()
+
 ## Reference
 * Scene: 01-GrassWithWind
   * [Wind Animated Grass In Unity URP Shader Graph Using Meshes](https://youtu.be/JDpt9xYaUYc)
@@ -41,6 +44,14 @@ ___
     * [DuncanF: MarchingCubesGPU](https://gist.github.com/DuncanF/353509dd397ea5f292fa52d1b9b5133d)
     * [Coding Adventure: Marching Cubes](https://youtu.be/M3iI2l0ltbE)
     * [benblo: TransformBounds](https://answers.unity.com/questions/361275/cant-convert-bounds-from-world-coordinates-to-loca.html)
+___
+* Scene: 05-GrasswithGeneratingBlades
+  * [Grass Fields in Unity URP! Generate Blades with Compute Shaders!](https://youtu.be/DeATXF4Szqo)
+    * [Roystan: Grass Shader](https://roystan.net/articles/grass-shader/)
+    * [Keijiro Takahashi: AngleAxis3x3](https://gist.github.com/keijiro/ee439d5e7388f3aafc5296005c8c3f33)
+    * [Ronja Böhringer: White Noise](https://www.ronja-tutorials.com/post/024-white-noise/)
+    * [Siddharth Hegde: Messing with Tangent Space](https://www.gamedeveloper.com/programming/messing-with-tangent-space)
+    * [DuncanF - Lockless marching cubes with DrawProceduralIndirect](https://gist.github.com/DuncanF/353509dd397ea5f292fa52d1b9b5133d)
 
 ## Resources From ... 
   * [Lennart Demes, ground texture](https://ambientcg.com/view?id=Ground003)

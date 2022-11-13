@@ -1,0 +1,143 @@
+// Each #kernel tells which function to compile; you can have many kernels
+#pragma kernel Main
+
+// Import some helper functions
+#include "NMGGrassBladesComputeHelpers.hlsl"
+
+// This describes a vertex on the source mesh
+struct SourceVertex {
+    float3 positionOS; // Position in object spaceS
+};
+// Source buffers, arranged as a vertex buffer and index buffer
+StructuredBuffer<SourceVertex> _SourceVertices;
+StructuredBuffer<int> _SourceTriangles;
+
+// This describes a vertex on the generated mesh
+struct DrawVertex {
+    float3 positionWS; // The position in world space
+    float height; // The height of this vertex on the grass blade
+};
+// A triangle on the generated mesh
+struct DrawTriangle {
+    float3 lightingNormalWS; // A normal, in world space, to use in the lighting algorithm
+    DrawVertex vertices[3]; // The three points on the triangle
+};
+
+// A buffer containing the generated mesh
+AppendStructuredBuffer<DrawTriangle> _DrawTriangles;
+
+// The indirect draw call args, as described in the renderer script
+struct IndirectArgs {
+    uint numVerticesPerInstance;
+    uint numInstances;
+    uint startVertexIndex;
+    uint startInstanceIndex;
+};
+// The kernel will count the number of vertices, so this must be RW enabled
+RWStructuredBuffer<IndirectArgs> _IndirectArgsBuffer;
+
+// Variables set by the renderer
+int _NumSourceTriangles; // The number of triangles on the source mesh
+float _MaxBendAngle; // Maximum bend angle as a multiplier to PI / 2
+float _BladeCurvature; // Describes how sharply the blade bends
+float _BladeHeight; // Maximum height of a blade
+float _BladeHeightVariance; // Variance of blade height
+float _BladeWidth; // Maximum blade width
+float _BladeWidthVariance; // Variance of blade width
+// Local to world matrix
+float4x4 _LocalToWorld;
+
+void GetCenterAndBasis(SourceVertex a, SourceVertex b, SourceVertex c, out float3 positionWS, out float3 normalWS, out float3x3 tsToWs) {
+    // We need to figure out the center of the triangle, since that is where the blade will sprout
+    // Convert each triangle point to world space
+    float3 positionA_WS = mul(_LocalToWorld, float4(a.positionOS, 1)).xyz;
+    float3 positionB_WS = mul(_LocalToWorld, float4(b.positionOS, 1)).xyz;
+    float3 positionC_WS = mul(_LocalToWorld, float4(c.positionOS, 1)).xyz;
+    // Then get the center point
+    positionWS = GetTriangleCenter(positionA_WS, positionB_WS, positionC_WS);
+    // and the normal vector and TS -> WS transformation matrix
+    GetTriangleNormalAndTSToWSMatrix(positionA_WS, positionB_WS, positionC_WS, normalWS, tsToWs);
+}
+
+float2 GetBladeDimensions(float3 positionWS) {
+    // Calculate the blade width and height, applying random variance
+    float width = randNegative1to1(positionWS, 0) * _BladeWidthVariance + _BladeWidth;
+    float height = randNegative1to1(positionWS, 1) * _BladeHeightVariance + _BladeHeight;
+    return float2(width, height);
+}
+
+// This function calculates values for the output point
+DrawVertex SetupBladePoint(float3 anchorWS, float2 dimensions, float3x3 tsToWs, float2 uv) {
+    // Calculate the offset in tangent space based on the UV and width/height
+    float3 offsetTS = float3((uv.x - 0.5f) * dimensions.x, 0, uv.y * dimensions.y);
+    // Calculate the offset in world space using the rotation matrix
+    float3 offsetWS = mul(tsToWs, offsetTS);
+
+    float3 positionWS = anchorWS + offsetWS;
+
+    DrawVertex output = (DrawVertex)0;
+    output.positionWS = positionWS;
+    output.height = uv.y;
+    return output;
+}
+
+// The main kernel
+[numthreads(128, 1, 1)]
+void Main(uint3 id : SV_DispatchThreadID) {
+
+    // Return if every triangle has been processed
+    if ((int)id.x >= _NumSourceTriangles) {
+        return;
+    }
+
+    // Calculate the start index of this triangle in the index buffer
+    int triStart = id.x * 3;
+    // Get the triangle center, normal vector, and tangent-to-world space transformation matrix
+    float3 positionWS, normalWS;
+    float3x3 tsToWs;
+    GetCenterAndBasis(
+        _SourceVertices[_SourceTriangles[triStart]],
+        _SourceVertices[_SourceTriangles[triStart + 1]],
+        _SourceVertices[_SourceTriangles[triStart + 2]],
+        positionWS, normalWS, tsToWs);
+
+    float2 dimensions = GetBladeDimensions(positionWS);
+
+    // The twist matrix decides which direction the grass blade will face
+    float3x3 twistMatrix = AngleAxis3x3(rand(positionWS, 2) * PI * 2, float3(0, 0, 1));
+    // This bend angle decides how much the tip bends towards 90 degrees
+    float maxBend = rand(positionWS, 3) * PI * 0.5f * _MaxBendAngle;
+    float3x3 bendMatrix = AngleAxis3x3(maxBend, float3(1, 0, 0));
+
+    // Create an array to hold blade points
+    DrawVertex vertices[3];
+
+    // Blade points will be arranged from the bottom up in the array
+    // with the point with the minimum u-coordinate in a pair appearing first
+
+    float3x3 transform = mul(tsToWs, mul(twistMatrix, bendMatrix));
+
+    // Append the first vertex
+    vertices[0] = SetupBladePoint(positionWS, dimensions, transform, float2(0, 0));
+
+    // Append the second vertex
+    vertices[1] = SetupBladePoint(positionWS, dimensions, transform, float2(1, 0));
+
+    // Append the tip vertex
+    vertices[2] = SetupBladePoint(positionWS, dimensions, transform, float2(0.5, 1));
+    
+    // Add triangles from the array into the draw buffer
+    // We can construct a triangle from every three adjacent points in the array
+    DrawTriangle tri = (DrawTriangle)0;
+    tri.lightingNormalWS = normalWS;
+    tri.vertices[0] = vertices[0];
+    tri.vertices[1] = vertices[1];
+    tri.vertices[2] = vertices[2];
+    _DrawTriangles.Append(tri);
+
+    // InterlockedAdd(a, b) adds b to a and stores the value in a. It is thread-safe
+    // This call counts the number of vertices, storing it in the indirect arguments
+    // This tells the renderer how many vertices are in the mesh in DrawProcedural
+    InterlockedAdd(_IndirectArgsBuffer[0].numVerticesPerInstance, 3);
+
+}
