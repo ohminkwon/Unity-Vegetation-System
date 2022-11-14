@@ -123,6 +123,326 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &38775856
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 38775858}
+  - component: {fileID: 38775857}
+  m_Layer: 0
+  m_Name: GrassBlades (4)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!114 &38775857
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 38775856}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b86d87e3bf998404e935d4ea81f7b15b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sourceMesh: {fileID: 6771868806032602683, guid: 19a2207e83ab5a742955378ba82b0ed9,
+    type: 3}
+  grassComputeShader: {fileID: 7200000, guid: cc0086bfb6df302418c66f5129498078, type: 3}
+  material: {fileID: 2100000, guid: d6f7c2a8aecfb31499e00ef4541e4db3, type: 2}
+  grassSetting:
+    maxSegments: 5
+    maxBendAngle: 0.15
+    bladeCurvature: 1.7
+    bladeHeight: 1
+    bladeHeightVariance: 0.1
+    bladeWidth: 0.2
+    bladeWidthVariance: 0.1
+    windNoiseTexture: {fileID: 2800000, guid: 667d1f713c970954abdaccc85653b917, type: 3}
+    windTextureScale: 1
+    windPeriod: 0.09
+    windScale: 2.1
+    windAmplitude: 0.36
+    cameraLODMin: 5
+    cameraLODMax: 15
+    cameraLODFactor: 1
+--- !u!4 &38775858
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 38775856}
+  m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 4.04, y: 0, z: 3.79}
+  m_LocalScale: {x: 200, y: 200, z: 200}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
+--- !u!1 &160161044
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 160161046}
+  - component: {fileID: 160161045}
+  m_Layer: 0
+  m_Name: GrassBlades (6)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!114 &160161045
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 160161044}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b86d87e3bf998404e935d4ea81f7b15b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sourceMesh: {fileID: 6771868806032602683, guid: 19a2207e83ab5a742955378ba82b0ed9,
+    type: 3}
+  grassComputeShader: {fileID: 7200000, guid: cc0086bfb6df302418c66f5129498078, type: 3}
+  material: {fileID: 2100000, guid: d6f7c2a8aecfb31499e00ef4541e4db3, type: 2}
+  grassSetting:
+    maxSegments: 5
+    maxBendAngle: 0.15
+    bladeCurvature: 1.7
+    bladeHeight: 1
+    bladeHeightVariance: 0.1
+    bladeWidth: 0.2
+    bladeWidthVariance: 0.1
+    windNoiseTexture: {fileID: 2800000, guid: 667d1f713c970954abdaccc85653b917, type: 3}
+    windTextureScale: 1
+    windPeriod: 0.09
+    windScale: 2.1
+    windAmplitude: 0.36
+    cameraLODMin: 5
+    cameraLODMax: 15
+    cameraLODFactor: 1
+--- !u!4 &160161046
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 160161044}
+  m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: -3.96, y: 0, z: 0}
+  m_LocalScale: {x: 200, y: 200, z: 200}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
+--- !u!1 &435313039
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 435313041}
+  - component: {fileID: 435313040}
+  m_Layer: 0
+  m_Name: GrassBlades (5)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!114 &435313040
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 435313039}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b86d87e3bf998404e935d4ea81f7b15b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sourceMesh: {fileID: 6771868806032602683, guid: 19a2207e83ab5a742955378ba82b0ed9,
+    type: 3}
+  grassComputeShader: {fileID: 7200000, guid: cc0086bfb6df302418c66f5129498078, type: 3}
+  material: {fileID: 2100000, guid: d6f7c2a8aecfb31499e00ef4541e4db3, type: 2}
+  grassSetting:
+    maxSegments: 5
+    maxBendAngle: 0.15
+    bladeCurvature: 1.7
+    bladeHeight: 1
+    bladeHeightVariance: 0.1
+    bladeWidth: 0.2
+    bladeWidthVariance: 0.1
+    windNoiseTexture: {fileID: 2800000, guid: 667d1f713c970954abdaccc85653b917, type: 3}
+    windTextureScale: 1
+    windPeriod: 0.09
+    windScale: 2.1
+    windAmplitude: 0.36
+    cameraLODMin: 5
+    cameraLODMax: 15
+    cameraLODFactor: 1
+--- !u!4 &435313041
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 435313039}
+  m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 4.04, y: 0, z: 7.57}
+  m_LocalScale: {x: 200, y: 200, z: 200}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
+--- !u!1 &492886225
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 492886227}
+  - component: {fileID: 492886226}
+  m_Layer: 0
+  m_Name: GrassBlades (8)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!114 &492886226
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 492886225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b86d87e3bf998404e935d4ea81f7b15b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sourceMesh: {fileID: 6771868806032602683, guid: 19a2207e83ab5a742955378ba82b0ed9,
+    type: 3}
+  grassComputeShader: {fileID: 7200000, guid: cc0086bfb6df302418c66f5129498078, type: 3}
+  material: {fileID: 2100000, guid: d6f7c2a8aecfb31499e00ef4541e4db3, type: 2}
+  grassSetting:
+    maxSegments: 5
+    maxBendAngle: 0.15
+    bladeCurvature: 1.7
+    bladeHeight: 1
+    bladeHeightVariance: 0.1
+    bladeWidth: 0.2
+    bladeWidthVariance: 0.1
+    windNoiseTexture: {fileID: 2800000, guid: 667d1f713c970954abdaccc85653b917, type: 3}
+    windTextureScale: 1
+    windPeriod: 0.09
+    windScale: 2.1
+    windAmplitude: 0.36
+    cameraLODMin: 5
+    cameraLODMax: 15
+    cameraLODFactor: 1
+--- !u!4 &492886227
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 492886225}
+  m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: -3.9599996, y: 0, z: 7.57}
+  m_LocalScale: {x: 200, y: 200, z: 200}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 11
+  m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
+--- !u!1 &617955060
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 617955062}
+  - component: {fileID: 617955061}
+  m_Layer: 0
+  m_Name: GrassBlades (2)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!114 &617955061
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 617955060}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b86d87e3bf998404e935d4ea81f7b15b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sourceMesh: {fileID: 6771868806032602683, guid: 19a2207e83ab5a742955378ba82b0ed9,
+    type: 3}
+  grassComputeShader: {fileID: 7200000, guid: cc0086bfb6df302418c66f5129498078, type: 3}
+  material: {fileID: 2100000, guid: d6f7c2a8aecfb31499e00ef4541e4db3, type: 2}
+  grassSetting:
+    maxSegments: 5
+    maxBendAngle: 0.15
+    bladeCurvature: 1.7
+    bladeHeight: 1
+    bladeHeightVariance: 0.1
+    bladeWidth: 0.2
+    bladeWidthVariance: 0.1
+    windNoiseTexture: {fileID: 2800000, guid: 667d1f713c970954abdaccc85653b917, type: 3}
+    windTextureScale: 1
+    windPeriod: 0.09
+    windScale: 2.1
+    windAmplitude: 0.36
+    cameraLODMin: 5
+    cameraLODMax: 15
+    cameraLODFactor: 1
+--- !u!4 &617955062
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 617955060}
+  m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 0, z: 7.57}
+  m_LocalScale: {x: 200, y: 200, z: 200}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!1 &639205567
 GameObject:
   m_ObjectHideFlags: 0
@@ -134,6 +454,7 @@ GameObject:
   - component: {fileID: 639205570}
   - component: {fileID: 639205569}
   - component: {fileID: 639205568}
+  - component: {fileID: 639205571}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -199,14 +520,111 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 639205567}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: -10}
+  m_LocalRotation: {x: -0.24381557, y: 0.0081597315, z: -0.0020452265, w: -0.96978515}
+  m_LocalPosition: {x: -0.167, y: 2.0720148, z: -3.3423252}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &639205571
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 639205567}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_RenderShadows: 1
+  m_RequiresDepthTextureOption: 2
+  m_RequiresOpaqueTextureOption: 2
+  m_CameraType: 0
+  m_Cameras: []
+  m_RendererIndex: -1
+  m_VolumeLayerMask:
+    serializedVersion: 2
+    m_Bits: 1
+  m_VolumeTrigger: {fileID: 0}
+  m_VolumeFrameworkUpdateModeOption: 2
+  m_RenderPostProcessing: 0
+  m_Antialiasing: 0
+  m_AntialiasingQuality: 2
+  m_StopNaN: 0
+  m_Dithering: 0
+  m_ClearDepth: 1
+  m_AllowXRRendering: 1
+  m_RequiresDepthTexture: 0
+  m_RequiresColorTexture: 0
+  m_Version: 2
+--- !u!1 &794830272
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 794830274}
+  - component: {fileID: 794830273}
+  m_Layer: 0
+  m_Name: GrassBlades (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!114 &794830273
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 794830272}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b86d87e3bf998404e935d4ea81f7b15b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sourceMesh: {fileID: 6771868806032602683, guid: 19a2207e83ab5a742955378ba82b0ed9,
+    type: 3}
+  grassComputeShader: {fileID: 7200000, guid: cc0086bfb6df302418c66f5129498078, type: 3}
+  material: {fileID: 2100000, guid: d6f7c2a8aecfb31499e00ef4541e4db3, type: 2}
+  grassSetting:
+    maxSegments: 5
+    maxBendAngle: 0.15
+    bladeCurvature: 1.7
+    bladeHeight: 1
+    bladeHeightVariance: 0.1
+    bladeWidth: 0.2
+    bladeWidthVariance: 0.1
+    windNoiseTexture: {fileID: 2800000, guid: 667d1f713c970954abdaccc85653b917, type: 3}
+    windTextureScale: 1
+    windPeriod: 0.09
+    windScale: 2.1
+    windAmplitude: 0.36
+    cameraLODMin: 5
+    cameraLODMax: 15
+    cameraLODFactor: 1
+--- !u!4 &794830274
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 794830272}
+  m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 0, z: 3.79}
+  m_LocalScale: {x: 200, y: 200, z: 200}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!1 &815607242
 GameObject:
   m_ObjectHideFlags: 0
@@ -272,7 +690,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1652289433
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -285,15 +703,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b86d87e3bf998404e935d4ea81f7b15b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sourceMesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+  sourceMesh: {fileID: 6771868806032602683, guid: 19a2207e83ab5a742955378ba82b0ed9,
+    type: 3}
   grassComputeShader: {fileID: 7200000, guid: cc0086bfb6df302418c66f5129498078, type: 3}
   material: {fileID: 2100000, guid: d6f7c2a8aecfb31499e00ef4541e4db3, type: 2}
   grassSetting:
-    maxBendAngle: 0.22
-    bladeHeight: 1.15
-    bladeHeightVariance: 0.2
-    bladeWidth: 0.42
+    maxSegments: 5
+    maxBendAngle: 0.15
+    bladeCurvature: 1.7
+    bladeHeight: 1
+    bladeHeightVariance: 0.1
+    bladeWidth: 0.2
     bladeWidthVariance: 0.1
+    windNoiseTexture: {fileID: 2800000, guid: 667d1f713c970954abdaccc85653b917, type: 3}
+    windTextureScale: 1
+    windPeriod: 0.09
+    windScale: 2.1
+    windAmplitude: 0.36
+    cameraLODMin: 5
+    cameraLODMax: 15
+    cameraLODFactor: 1
 --- !u!4 &1652289434
 Transform:
   m_ObjectHideFlags: 0
@@ -301,14 +730,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1652289432}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 200, y: 200, z: 200}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!1 &1907684457
 GameObject:
   m_ObjectHideFlags: 0
@@ -424,3 +853,131 @@ MonoBehaviour:
   m_ShadowLayerMask: 1
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
+--- !u!1 &1935752945
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1935752947}
+  - component: {fileID: 1935752946}
+  m_Layer: 0
+  m_Name: GrassBlades (3)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!114 &1935752946
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1935752945}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b86d87e3bf998404e935d4ea81f7b15b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sourceMesh: {fileID: 6771868806032602683, guid: 19a2207e83ab5a742955378ba82b0ed9,
+    type: 3}
+  grassComputeShader: {fileID: 7200000, guid: cc0086bfb6df302418c66f5129498078, type: 3}
+  material: {fileID: 2100000, guid: d6f7c2a8aecfb31499e00ef4541e4db3, type: 2}
+  grassSetting:
+    maxSegments: 5
+    maxBendAngle: 0.15
+    bladeCurvature: 1.7
+    bladeHeight: 1
+    bladeHeightVariance: 0.1
+    bladeWidth: 0.2
+    bladeWidthVariance: 0.1
+    windNoiseTexture: {fileID: 2800000, guid: 667d1f713c970954abdaccc85653b917, type: 3}
+    windTextureScale: 1
+    windPeriod: 0.09
+    windScale: 2.1
+    windAmplitude: 0.36
+    cameraLODMin: 5
+    cameraLODMax: 15
+    cameraLODFactor: 1
+--- !u!4 &1935752947
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1935752945}
+  m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 4.04, y: 0, z: 0}
+  m_LocalScale: {x: 200, y: 200, z: 200}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
+--- !u!1 &2062640581
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2062640583}
+  - component: {fileID: 2062640582}
+  m_Layer: 0
+  m_Name: GrassBlades (7)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!114 &2062640582
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2062640581}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b86d87e3bf998404e935d4ea81f7b15b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sourceMesh: {fileID: 6771868806032602683, guid: 19a2207e83ab5a742955378ba82b0ed9,
+    type: 3}
+  grassComputeShader: {fileID: 7200000, guid: cc0086bfb6df302418c66f5129498078, type: 3}
+  material: {fileID: 2100000, guid: d6f7c2a8aecfb31499e00ef4541e4db3, type: 2}
+  grassSetting:
+    maxSegments: 5
+    maxBendAngle: 0.15
+    bladeCurvature: 1.7
+    bladeHeight: 1
+    bladeHeightVariance: 0.1
+    bladeWidth: 0.2
+    bladeWidthVariance: 0.1
+    windNoiseTexture: {fileID: 2800000, guid: 667d1f713c970954abdaccc85653b917, type: 3}
+    windTextureScale: 1
+    windPeriod: 0.09
+    windScale: 2.1
+    windAmplitude: 0.36
+    cameraLODMin: 5
+    cameraLODMax: 15
+    cameraLODFactor: 1
+--- !u!4 &2062640583
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2062640581}
+  m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: -3.9599996, y: 0, z: 3.79}
+  m_LocalScale: {x: 200, y: 200, z: 200}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 10
+  m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}

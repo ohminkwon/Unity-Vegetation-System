@@ -19,7 +19,7 @@
 [![Cover](./Assets/Art/Samples/04-cover-GrassWithComputeShaders.png)](https://youtu.be/ODRMUu2rpNc)
 
 ## 05-GrasswithGeneratingBlades
-![Cover]()
+[![Cover](./Assets/Art/Samples/05-cover-GrasswithGeneratingBlades.png)](https://youtu.be/iCve6qVbe1M)
 
 ## Reference
 * Scene: 01-GrassWithWind
