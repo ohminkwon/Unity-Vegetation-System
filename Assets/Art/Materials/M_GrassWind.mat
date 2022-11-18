@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: M_Grass
-  m_Shader: {fileID: -6465566751694194690, guid: d9670a0f8dbe8af40bb934a1d8fe1e5e,
+  m_Name: M_GrassWind
+  m_Shader: {fileID: -6465566751694194690, guid: 18b4bb235fba18f468a5cc3feb9dfc65,
     type: 3}
   m_ValidKeywords: []
   m_InvalidKeywords: []
@@ -112,8 +112,8 @@ Material:
     - _SpecularHighlights: 1
     - _SrcBlend: 5
     - _Surface: 1
-    - _TrampleFallOff: 0.53
-    - _TrampleMaxDistance: 2.8
+    - _TrampleFallOff: 1.37
+    - _TrampleMaxDistance: 2.5
     - _TramplePushStrength: 5
     - _TrampleSquishStrength: 5.5
     - _WindStrength: 0.64
