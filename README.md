@@ -22,7 +22,10 @@
 [![GrassWithGeneratingBlades](./Assets/Art/Samples/05-cover-GrassWithGeneratingBlades.png)](https://youtu.be/iCve6qVbe1M)
 
 ## 06-Grass With Trample Effect
-[![GrassWithTrampleEffect](./Assets/Art/Samples/06-cover-GrassWithTrample.png]](https://youtu.be/T0Ho-X7Sw7c)
+[![GrassWithTrampleEffect](./Assets/Art/Samples/06-cover-GrassWithTrample.png)](https://youtu.be/T0Ho-X7Sw7c)
+
+## 07-Mesh Asset Generator
+![GeneratedMesh](./Assets/Art/Samples/07-cover-MeshAssetGenerator.png)
 
 ## Reference
 * Scene: 01-Grass With Wind Effect
@@ -58,6 +61,11 @@ ___
 ___    
 * Scene: 06-Grass With Trample Effect
   * [Trampled Grass! Add Simple Interaction to Unity URP Shader Graph Grass](https://youtu.be/AmO7k-Lr0XM)
+___
+* Scene: 07-Mesh Asset Generator
+  * [Generate a Mesh Asset Using Compute Shaders in the Unity Editor](https://youtu.be/AiWCPiGr10o)
+    * [pharan: Mesh Saver](https://github.com/pharan/Unity-MeshSaver/blob/master/MeshSaver/Editor/MeshSaverEditor.cs)
+    * [Unity Technologies: GraphicsBuffer documentation](https://docs.unity3d.com/2021.3/Documentation/ScriptReference/GraphicsBuffer.html)
 
 ## Resources From ... 
   * [Lennart Demes, ground texture](https://ambientcg.com/view?id=Ground003)

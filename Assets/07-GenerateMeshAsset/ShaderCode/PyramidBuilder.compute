@@ -1,0 +1,93 @@
+// Each #kernel tells which function to compile; you can have many kernels
+#pragma kernel Main
+
+// This describes a vertex on the source mesh
+struct SourceVertex {
+    float3 positionOS;
+    float2 uv;
+};
+// Source buffers, arranged as a vertex buffer and index buffer
+StructuredBuffer<SourceVertex> _SourceVertices;
+StructuredBuffer<int> _SourceIndices;
+
+// This describes a vertex on the generated mesh
+struct GeneratedVertex {
+    float3 positionOS;
+    float3 normalOS;
+    float2 uv;
+};
+// Source and index buffers for the generated mesh
+RWStructuredBuffer<GeneratedVertex> _GeneratedVertices;
+RWStructuredBuffer<int> _GeneratedIndices;
+
+int _NumSourceTriangles;
+float _PyramidHeight;
+float4x4 _Transform;
+
+// Apply the _Transform matrix
+SourceVertex Transform(SourceVertex v) {
+    SourceVertex o;
+    o.positionOS = mul(_Transform, float4(v.positionOS, 1)).xyz;
+    o.uv = v.uv;
+    return o;
+}
+
+// Calculates the normal vector of a plane containing the given triangle
+float3 CalculateTriangleNormal(float3 a, float3 b, float3 c) {
+    return normalize(cross(b - a, c - a));
+}
+
+// Create a generated vertex
+GeneratedVertex MakeGeneratedVertex(SourceVertex source, float3 normal) {
+    GeneratedVertex o;
+    o.positionOS = source.positionOS;
+    o.normalOS = normal;
+    o.uv = source.uv;
+    return o;
+}
+
+void AddTriangle(int startIndex, SourceVertex a, SourceVertex b, SourceVertex c) {
+    float3 triangleNormal = CalculateTriangleNormal(a.positionOS, b.positionOS, c.positionOS);
+    // We want sharp shading, so each triangle is composed of it's own three vertices
+    // We have to do this since vertices at the same position would not have the same normal
+    _GeneratedVertices[startIndex] = MakeGeneratedVertex(a, triangleNormal);
+    _GeneratedVertices[startIndex + 1] = MakeGeneratedVertex(b, triangleNormal);
+    _GeneratedVertices[startIndex + 2] = MakeGeneratedVertex(c, triangleNormal);
+    
+    _GeneratedIndices[startIndex] = startIndex;
+    _GeneratedIndices[startIndex + 1] = startIndex + 1;
+    _GeneratedIndices[startIndex + 2] = startIndex + 2;
+}
+
+[numthreads(128, 1, 1)]
+void Main (uint3 id : SV_DispatchThreadID)
+{
+    // Disptaches can only be in chunks of 128, there might be more threads than number
+    // of triangles. Return in that case
+    if ((int)id.x >= _NumSourceTriangles) {
+        return;
+    }
+
+    // Get the vertices which make up this triangle
+    // The index array contains indices into the vertex array
+    // Three values in the index array describe one triangle in the source mesh
+    int triStart = id.x * 3;
+    SourceVertex a = Transform(_SourceVertices[_SourceIndices[triStart]]);
+    SourceVertex b = Transform(_SourceVertices[_SourceIndices[triStart + 1]]);
+    SourceVertex c = Transform(_SourceVertices[_SourceIndices[triStart + 2]]);
+
+    // Calculate the normal of the source triangle, and extrude the center point
+    // outward by the pyramid height
+    float3 triNormal = CalculateTriangleNormal(a.positionOS, b.positionOS, c.positionOS);
+    SourceVertex center;
+    center.positionOS = (a.positionOS + b.positionOS + c.positionOS) / 3 + triNormal * _PyramidHeight;
+    center.uv = (a.uv + b.uv + c.uv) / 3; // Average the UV
+
+    // Each source triangle generates 3 triangles, which each have 3 vertices and indices
+    // So, this source triangle's data starts at the dispatch id times 9
+    int generatedStart = id.x * 3 * 3;
+    // Wind the triangles clockwise, so Unity will see them as front facing
+    AddTriangle(generatedStart, a, b, center);
+    AddTriangle(generatedStart + 3, b, c, center);
+    AddTriangle(generatedStart + 6, c, a, center);
+}
