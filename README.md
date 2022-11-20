@@ -27,6 +27,9 @@
 ## 07-Mesh Asset Generator
 ![GeneratedMesh](./Assets/Art/Samples/07-cover-MeshAssetGenerator.png)
 
+## 08-Grass With Blades Mesh Bake
+![GrassWithBladesMeshBake](./Assets/Art/Samples/08-cover-GrassWithBladesMeshBake.png)
+
 ## Reference
 * Scene: 01-Grass With Wind Effect
   * [Wind Animated Grass In Unity URP Shader Graph Using Meshes](https://youtu.be/JDpt9xYaUYc)
@@ -66,6 +69,11 @@ ___
   * [Generate a Mesh Asset Using Compute Shaders in the Unity Editor](https://youtu.be/AiWCPiGr10o)
     * [pharan: Mesh Saver](https://github.com/pharan/Unity-MeshSaver/blob/master/MeshSaver/Editor/MeshSaverEditor.cs)
     * [Unity Technologies: GraphicsBuffer documentation](https://docs.unity3d.com/2021.3/Documentation/ScriptReference/GraphicsBuffer.html)
+___
+* Scene: 08-Grass With Blades Mesh Bake
+  * [Blade Grass! Generate and Bake a Field Mesh Using a Compute Shader](https://youtu.be/6SFTcDNqwaA)
+    * [Unity Technologies: GPU Instancing](https://docs.unity3d.com/Manual/GPUInstancing.html)
+    * [VPellen: calculate a plane perpendicular to a normal](https://stackoverflow.com/questions/55464852/how-to-find-a-randomic-vector-orthogonal-to-a-given-vector)
 
 ## Resources From ... 
   * [Lennart Demes, ground texture](https://ambientcg.com/view?id=Ground003)
