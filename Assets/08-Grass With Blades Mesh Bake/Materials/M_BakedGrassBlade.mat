@@ -21,7 +21,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: M_BakedGrassBlade
-  m_Shader: {fileID: 4800000, guid: b4daa5463ce46cc449c9f750d25da56e, type: 3}
+  m_Shader: {fileID: 4800000, guid: 05aaf29a9d5ecdd43bd0e9a170b03ab9, type: 3}
   m_ValidKeywords: []
   m_InvalidKeywords: []
   m_LightmapFlags: 4

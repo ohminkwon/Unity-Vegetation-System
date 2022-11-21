@@ -30,6 +30,9 @@
 ## 08-Grass With Blades Mesh Bake
 ![GrassWithBladesMeshBake](./Assets/Art/Samples/08-cover-GrassWithBladesMeshBake.png)
 
+## 09-Grass With Shadow Cast
+![Grass With Shadow Cast]()
+
 ## Reference
 * Scene: 01-Grass With Wind Effect
   * [Wind Animated Grass In Unity URP Shader Graph Using Meshes](https://youtu.be/JDpt9xYaUYc)
@@ -74,6 +77,10 @@ ___
   * [Blade Grass! Generate and Bake a Field Mesh Using a Compute Shader](https://youtu.be/6SFTcDNqwaA)
     * [Unity Technologies: GPU Instancing](https://docs.unity3d.com/Manual/GPUInstancing.html)
     * [VPellen: calculate a plane perpendicular to a normal](https://stackoverflow.com/questions/55464852/how-to-find-a-randomic-vector-orthogonal-to-a-given-vector)
+___
+* Scene: 09-Grass With Shadow Cast
+  * [Adding Shadow Casting to Grass Baked with Compute Shaders](https://youtu.be/IPoHY_yJxMc)
+    * [Unity Basics: Triangle Winding, Culling Modes & Double Sided Materials](https://youtu.be/3WWKHt92XKQ)  
 
 ## Resources From ... 
   * [Lennart Demes, ground texture](https://ambientcg.com/view?id=Ground003)
