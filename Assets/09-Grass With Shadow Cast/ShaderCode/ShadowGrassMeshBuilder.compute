@@ -27,6 +27,7 @@ struct GeneratedVertex {
     float3 normalOS;
     float2 uv;
     float3 bladeAnchorOS;
+    float3 casterNormalOS;
 };
 // Source and index buffers for the generated mesh
 RWStructuredBuffer<GeneratedVertex> _GeneratedVertices;
@@ -84,7 +85,31 @@ GeneratedVertex MakeGeneratedPoint(float3 anchorOS, float3 normalOS, float2 dime
     output.normalOS = normalOS;
     output.uv = uv;
     output.bladeAnchorOS = anchorOS;
+    output.casterNormalOS = mul(tsToOs, float3(0, 1, 0));
     return output;
+}
+
+GeneratedVertex MakeReversedPoint(GeneratedVertex vertex) {
+    GeneratedVertex reversed = vertex;
+    reversed.casterNormalOS = -vertex.casterNormalOS;
+    return reversed;
+}
+
+// In order for triangles to wind clockwise, odd triangles have a different
+// index order
+void AddTriangleClockwise(int t, int indexStart, int vertexStart) {
+    int triStart = indexStart + t * 3;
+    int vertStart = vertexStart + t;
+    _GeneratedIndices[triStart] = vertStart;
+    _GeneratedIndices[triStart + 1] = vertStart + 1;
+    _GeneratedIndices[triStart + 2] = vertStart + 2;
+}
+void AddTriangleCounterClockwise(int t, int indexStart, int vertexStart) {
+    int triStart = indexStart + t * 3;
+    int vertStart = vertexStart + t;
+    _GeneratedIndices[triStart] = vertStart + 1;
+    _GeneratedIndices[triStart + 1] = vertStart;
+    _GeneratedIndices[triStart + 2] = vertStart + 2;
 }
 
 [numthreads(128, 1, 1)]
@@ -151,23 +176,31 @@ void Main (uint3 id : SV_DispatchThreadID)
     vertices[numBladeSegments * 2] = MakeGeneratedPoint(positionOS, normalOS, dimensions, tipTransform, float2(0.5, 1));
 
     // Calculate the positions to insert these vertices and this triangle into the generated mesh arrays
-    int numGenVertices = numBladeSegments * 2 + 1;
-    int numGenTriangles = numGenVertices - 2;
-    int numGenIndices = numGenTriangles * 3; // Three indices per triangle
-    int genIndexStart = id.x * numGenIndices;
-    int genVertexStart = id.x * numGenVertices;
+    int numSideVertices = numBladeSegments * 2 + 1;
+    int numSideTriangles = numSideVertices - 2;
+    int numSideIndices = numSideTriangles * 3; // Three indices per triangle
+    int genIndexStart = id.x * numSideIndices * 2;
+    int genVertexStart = id.x * numSideVertices * 2;
 
-    for (int i = 0; i < numGenVertices; i++) 
+    for (int i = 0; i < numSideVertices; i++) 
     {
+        // The reverse side of the blade is stored directly after the front side
         _GeneratedVertices[genVertexStart + i] = vertices[i];
+        _GeneratedVertices[genVertexStart + numSideVertices + i] = MakeReversedPoint(vertices[i]);
     }
-    for (int t = 0; t < numGenTriangles; t++) 
+
+    // Every three adjacent vertices in the vertices array make a triangle in the blade
+    // For instance, triangle #0 contains vertices #0, #1, #2; triangle #1 contains vertices #1, #2, #3; etc.
+    // Even and odd triangles have slightly different index orders so both are wound clockwise
+    // Note that the triangle on the back side should be treated as having the other winding type
+    for (int t = 0; t < numSideTriangles; t += 2) 
     {
-        // Every three adjacent vertices in the vertices array make a triangle in the blade
-        // For instance, triangle #0 contains vertices #0, #1, #2; triangle #1 contains vertices #1, #2, #3; etc.
-        int genTriangleIndexStart = genIndexStart + t * 3;
-        for (int i = 0; i < 3; i++) {
-            _GeneratedIndices[genTriangleIndexStart + i] = genVertexStart + t + i;
-        }
+        AddTriangleClockwise(t, genIndexStart, genVertexStart);
+        AddTriangleCounterClockwise(t, genIndexStart + numSideIndices, genVertexStart + numSideVertices);
     }
+    for (int t = 1; t < numSideTriangles; t += 2) 
+    {
+        AddTriangleCounterClockwise(t, genIndexStart, genVertexStart);
+        AddTriangleClockwise(t, genIndexStart + numSideIndices, genVertexStart + numSideVertices);
+    }    
 }

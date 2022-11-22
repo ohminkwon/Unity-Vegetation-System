@@ -31,7 +31,7 @@
 ![GrassWithBladesMeshBake](./Assets/Art/Samples/08-cover-GrassWithBladesMeshBake.png)
 
 ## 09-Grass With Shadow Cast
-![Grass With Shadow Cast]()
+[![Grass With Shadow Cast](./Assets/Art/Samples/09-cover-GrassWithShadowCast.png)](https://youtu.be/WA8PzVAWhoA)
 
 ## Reference
 * Scene: 01-Grass With Wind Effect

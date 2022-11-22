@@ -7,10 +7,11 @@
 #include "NMGBladeGrassGraphicsHelpers.hlsl"
 
 struct Attributes {
-    float3 positionOS       : POSITION;
-    float3 normalOS         : NORMAL;
-    float2 uv               : TEXCOORD0;
-    float3 bladeAnchorOS    : TEXCOORD1;
+    float3 positionOS           : POSITION;
+    float3 normalOS             : NORMAL;
+    float2 uv                   : TEXCOORD0;
+    float3 bladeAnchorOS        : TEXCOORD1;
+    float3 shadowCastNormalOS   : TEXCOORD2;
     UNITY_VERTEX_INPUT_INSTANCE_ID
 };
 
@@ -32,6 +33,8 @@ TEXTURE2D(_WindTexture); SAMPLER(sampler_WindTexture);
 float4 _WindTexture_ST;
 float _WindFrequency;
 float _WindAmplitude;
+
+float _ShadowLightness;
 
 // Vertex functions
 
@@ -70,7 +73,7 @@ VertexOutput Vertex(Attributes input) {
     output.positionWS = positionWS;
     output.normalWS = normalWS;
     output.uv = input.uv;
-    output.positionCS = CalculatePositionCSWithShadowCasterLogic(positionWS, normalWS);
+    output.positionCS = CalculatePositionCSWithShadowCasterLogic(positionWS, GetVertexNormalInputs(input.shadowCastNormalOS).normalWS);
 
     return output;
 }
@@ -99,9 +102,10 @@ half4 Fragment(VertexOutput input) : SV_Target
     // The arguments are lighting input data, albedo color, specular color, smoothness, emission color, and alpha
 
     SurfaceData surfaceInput = (SurfaceData)0;
-    surfaceInput.albedo = albedo;
+    surfaceInput.albedo = albedo * (1 - _ShadowLightness);
     surfaceInput.alpha = 1;
     surfaceInput.specular = 1;
+    surfaceInput.emission = albedo * _ShadowLightness;
     surfaceInput.occlusion = 1;
 
     return UniversalFragmentBlinnPhong(lightingInput, surfaceInput);

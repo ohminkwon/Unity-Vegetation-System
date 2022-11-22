@@ -20,8 +20,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: M_BakedGrassBlade
-  m_Shader: {fileID: 4800000, guid: b4daa5463ce46cc449c9f750d25da56e, type: 3}
+  m_Name: M_ShadowGrassBlade
+  m_Shader: {fileID: 4800000, guid: 05aaf29a9d5ecdd43bd0e9a170b03ab9, type: 3}
   m_ValidKeywords: []
   m_InvalidKeywords: []
   m_LightmapFlags: 4
@@ -115,14 +115,14 @@ Material:
     - _QueueOffset: 0
     - _RandomJitterRadius: 0.05
     - _ReceiveShadows: 1
-    - _ShadowLightness: 0.186
+    - _ShadowLightness: 0.259
     - _Smoothness: 0.5
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _Surface: 0
-    - _WindAmplitude: 0.5
-    - _WindFrequency: 0.1
+    - _WindAmplitude: 0.1
+    - _WindFrequency: 0.09
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:

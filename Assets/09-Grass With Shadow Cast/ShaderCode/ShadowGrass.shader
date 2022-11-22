@@ -8,6 +8,7 @@ Shader "Grass/ShadowGrassBlade"
         _WindTexture("Wind texture", 2D) = "white" {}
         _WindFrequency("Wind frequency", Float) = 0.1
         _WindAmplitude("Wind strength", Float) = 0.5
+        _ShadowLightness("Shadow lightness", Range(0, 1)) = 0
     }
 
     SubShader
@@ -20,8 +21,7 @@ Shader "Grass/ShadowGrassBlade"
         {
 
             Name "ForwardLit"
-            Tags{"LightMode" = "UniversalForward"}
-            Cull Off
+            Tags{"LightMode" = "UniversalForward"}          
 
             HLSLPROGRAM
             // Signal this shader requires a compute buffer
@@ -53,8 +53,7 @@ Shader "Grass/ShadowGrassBlade"
         {
 
             Name "ShadowCaster"
-            Tags{"LightMode" = "ShadowCaster"}
-            Cull Off
+            Tags{"LightMode" = "ShadowCaster"}           
 
             HLSLPROGRAM
             // Signal this shader requires a compute buffer
